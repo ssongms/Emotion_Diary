@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const DiaryItem = ({ id, author, content, created_date, emotion }) => {
+const DiaryItem = ({ id, author, content, created_date, emotion, onDelete }) => {
   return (
     <DiaryItemContainer>
       <AuthorInfo>
@@ -11,6 +11,16 @@ const DiaryItem = ({ id, author, content, created_date, emotion }) => {
         <DateInfo>{new Date(created_date).toLocaleString()}</DateInfo>
       </AuthorInfo>
       <DiaryContent>{content}</DiaryContent>
+      <DeleteButton
+        onClick={() => {
+          console.log(id);
+          if (window.confirm(`${id}번 일기를 정말 삭제하시겠습니까?`)) {
+            onDelete(id);
+          }
+        }}
+      >
+        삭제하기
+      </DeleteButton>
     </DiaryItemContainer>
   );
 };
@@ -38,3 +48,5 @@ const DiaryContent = styled.div`
   margin-bottom: 30px;
   margin-top: 30px;
 `;
+
+const DeleteButton = styled.button``;

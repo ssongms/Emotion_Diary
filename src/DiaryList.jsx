@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import DiaryItem from "./DiaryItem";
 
-const DiaryList = ({ diaryList }) => {
+const DiaryList = ({ diaryList, onDelete }) => {
   //prop으로 받음
   console.log(diaryList);
   return (
@@ -13,6 +13,7 @@ const DiaryList = ({ diaryList }) => {
           <DiaryItem
             key={it.id}
             {...it}
+            onDelete={onDelete}
           />
         ))}
       </div>
