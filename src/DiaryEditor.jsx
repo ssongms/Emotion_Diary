@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import styled from "styled-components";
 
-const DiaryEditor = () => {
+const DiaryEditor = ({ onCreate }) => {
   //   const [author, setAuthor] = useState("");
   //   const [content, setContent] = useState("");
   const authorInput = useRef();
@@ -30,7 +30,13 @@ const DiaryEditor = () => {
       contentInput.current.focus();
       return;
     }
-    alert("저장했습니다.");
+    onCreate(state.author, state.content, state.emotion);
+    alert("일기를 저장했습니다.");
+    setState({
+      author: "",
+      content: "",
+      emotion: 1,
+    });
   };
 
   return (
