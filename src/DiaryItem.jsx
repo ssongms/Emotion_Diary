@@ -1,6 +1,35 @@
 import styled from "styled-components";
+import { useState, useRef } from "react";
 
-const DiaryItem = ({ id, author, content, created_date, emotion, onDelete }) => {
+const DiaryItem = ({ id, author, content, created_date, emotion, onRemove, onEdit }) => {
+  const [isEdit, setIsEdit] = useState(false); // 수정 중인지, 아닌지를 확인함
+  const toggleIsEdit = () => setIsEdit(!isEdit); // 기존의 isEdit 상태를 반전시킴
+  const [localContent, setLocalContent] = useState(content);
+
+  const localContentInput = useRef();
+  const handleRemove = () => {
+    console.log(id);
+    if (window.confirm(`${id}번 일기를 정말 삭제하시겠습니까?`)) {
+      onRemove(id);
+    }
+  };
+
+  const handleQuitEdit = () => {
+    setIsEdit(false);
+    setLocalContent(content);
+  };
+
+  const handleEdit = () => {
+    if (localContent.length < 5) {
+      localContentInput.current.focus();
+      return;
+    }
+    if (window.confirm(`${id} : 일기를 수정하시겠습니까?`)) {
+      onEdit(id, localContent);
+      toggleIsEdit();
+    }
+  };
+
   return (
     <DiaryItemContainer>
       <AuthorInfo>
@@ -10,17 +39,32 @@ const DiaryItem = ({ id, author, content, created_date, emotion, onDelete }) => 
         <br />
         <DateInfo>{new Date(created_date).toLocaleString()}</DateInfo>
       </AuthorInfo>
-      <DiaryContent>{content}</DiaryContent>
-      <DeleteButton
-        onClick={() => {
-          console.log(id);
-          if (window.confirm(`${id}번 일기를 정말 삭제하시겠습니까?`)) {
-            onDelete(id);
-          }
-        }}
-      >
-        삭제하기
-      </DeleteButton>
+      <DiaryContent>
+        {isEdit ? (
+          <>
+            <textarea
+              ref={localContentInput}
+              value={localContent}
+              onChange={(e) => {
+                setLocalContent(e.target.value);
+              }}
+            />
+          </>
+        ) : (
+          <>{content}</>
+        )}
+      </DiaryContent>
+      {isEdit ? (
+        <>
+          <button onClick={handleQuitEdit}>수정 취소</button>
+          <button onClick={handleEdit}>수정 완료</button>
+        </>
+      ) : (
+        <>
+          <DeleteButton onClick={handleRemove}>삭제하기</DeleteButton>
+          <button onClick={toggleIsEdit}>수정하기</button>
+        </>
+      )}
     </DiaryItemContainer>
   );
 };
