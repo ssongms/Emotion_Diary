@@ -1,7 +1,11 @@
 import styled from "styled-components";
-import { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 const DiaryItem = ({ id, author, content, created_date, emotion, onRemove, onEdit }) => {
+  useEffect(() => {
+    console.log(`${id}번째 일기 아이템 렌더`);
+  });
+
   const [isEdit, setIsEdit] = useState(false); // 수정 중인지, 아닌지를 확인함
   const toggleIsEdit = () => setIsEdit(!isEdit); // 기존의 isEdit 상태를 반전시킴
   const [localContent, setLocalContent] = useState(content);
@@ -69,7 +73,7 @@ const DiaryItem = ({ id, author, content, created_date, emotion, onRemove, onEdi
   );
 };
 
-export default DiaryItem;
+export default React.memo(DiaryItem);
 
 const DiaryItemContainer = styled.div`
   background-color: rgb(240, 240, 240);

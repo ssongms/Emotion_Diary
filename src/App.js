@@ -24,14 +24,13 @@ function App() {
     setData((data) => [newItem, ...data]); //원래 데이터에 new 일기를 이어붙임
   }, []);
 
-  const onRemove = (targetId) => {
-    const newDiaryList = data.filter((it) => it.id !== targetId);
-    setData(newDiaryList);
-  };
+  const onRemove = useCallback((targetId) => {
+    setData((data) => data.filter((it) => it.id !== targetId));
+  }, []);
 
-  const onEdit = (targetId, newContent) => {
-    setData(data.map((it) => (it.id === targetId ? { ...it, content: newContent } : it)));
-  };
+  const onEdit = useCallback((targetId, newContent) => {
+    setData((data) => data.map((it) => (it.id === targetId ? { ...it, content: newContent } : it)));
+  }, []);
 
   const getData = async () => {
     const res = await fetch("https://jsonplaceholder.typicode.com/comments").then((res) =>
