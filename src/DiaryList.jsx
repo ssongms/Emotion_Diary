@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import DiaryItem from "./DiaryItem";
+import { useContext } from "react";
+import { DiaryDispatchContext, DiaryStateContext } from "./App";
 
-const DiaryList = ({ diaryList, onRemove, onEdit }) => {
-  //prop으로 받음
-  console.log(diaryList);
+const DiaryList = () => {
+  const diaryList = useContext(DiaryStateContext);
   return (
     <DiaryListContainer>
       <DiaryListHeader>일기 리스트</DiaryListHeader>
@@ -13,8 +14,6 @@ const DiaryList = ({ diaryList, onRemove, onEdit }) => {
           <DiaryItem
             key={it.id}
             {...it}
-            onRemove={onRemove}
-            onEdit={onEdit}
           />
         ))}
       </div>
