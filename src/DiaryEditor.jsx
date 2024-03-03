@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
 import styled from "styled-components";
 
 const DiaryEditor = ({ onCreate }) => {
@@ -78,7 +78,7 @@ const DiaryEditor = ({ onCreate }) => {
   );
 };
 
-export default React.memo(DiaryEditor);
+export default DiaryEditor;
 
 // 객체의 값을 바꾸려면 새로운 객체를 전달해줘야 한다. (author는 바뀌지 않고, content만 바꿔야 함)
 
